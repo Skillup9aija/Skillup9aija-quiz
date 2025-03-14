@@ -1,0 +1,80 @@
+const questions = [
+    { question: "What is the primary programming language used in Data Science?", options: ["Java", "Python", "C++", "Ruby"], answer: "Python" },
+    { question: "Which library is commonly used for data manipulation in Python?", options: ["NumPy", "Pandas", "Matplotlib", "Scikit-learn"], answer: "Pandas" },
+    { question: "What does CSV stand for in Data Science?", options: ["Comma-Separated Values", "Common System Variables", "Complex Storage View", "Coded Sequence Variables"], answer: "Comma-Separated Values" },
+    { question: "Which Python library is used for deep learning?", options: ["TensorFlow", "BeautifulSoup", "OpenCV", "Flask"], answer: "TensorFlow" },
+    { question: "Which SQL statement retrieves data from a database?", options: ["GET", "SELECT", "RETRIEVE", "FETCH"], answer: "SELECT" },
+    { question: "Which of these is a Machine Learning algorithm?", options: ["K-Means", "HTML", "CSS", "JavaScript"], answer: "K-Means" },
+    { question: "What is supervised learning?", options: ["Learning with labeled data", "Learning without labeled data", "Self-learning", "None of the above"], answer: "Learning with labeled data" },
+    { question: "Which Python package is used for data visualization?", options: ["Scikit-learn", "Matplotlib", "Pandas", "Seaborn"], answer: "Matplotlib" },
+    { question: "Which metric is used to evaluate classification models?", options: ["Mean Absolute Error", "Accuracy", "R-Squared", "P-Value"], answer: "Accuracy" },
+    { question: "What is the purpose of feature scaling?", options: ["Reduce dataset size", "Make features comparable", "Remove missing values", "Speed up processing"], answer: "Make features comparable" },
+    { question: "Which tool is used for big data processing?", options: ["Tableau", "Hadoop", "Excel", "Photoshop"], answer: "Hadoop" },
+    { question: "What is the main advantage of Python in Data Science?", options: ["Speed", "Ease of Use", "Limited Libraries", "None"], answer: "Ease of Use" },
+    { question: "Which type of variable is used for binary classification?", options: ["Continuous", "Discrete", "Categorical", "Boolean"], answer: "Boolean" },
+    { question: "What does a confusion matrix measure?", options: ["Training time", "Prediction errors", "Code complexity", "All of the above"], answer: "Prediction errors" },
+    { question: "Which method is used to fill missing values in Pandas?", options: ["fillna()", "dropna()", "replace()", "None"], answer: "fillna()" },
+    { question: "What is the first step in data preprocessing?", options: ["Feature selection", "Data cleaning", "Model building", "Prediction"], answer: "Data cleaning" },
+    { question: "What is PCA used for?", options: ["Data visualization", "Feature selection", "Dimensionality reduction", "Machine Learning"], answer: "Dimensionality reduction" },
+    { question: "Which algorithm is commonly used for text classification?", options: ["Naive Bayes", "K-Means", "DBSCAN", "Hierarchical Clustering"], answer: "Naive Bayes" },
+    { question: "Which programming language is NOT commonly used in Data Science?", options: ["Python", "R", "C++", "Swift"], answer: "Swift" },
+    { question: "Which database is commonly used in Data Science?", options: ["MySQL", "MongoDB", "PostgreSQL", "All of the above"], answer: "All of the above" },
+    { question: "What is the purpose of EDA (Exploratory Data Analysis)?", options: ["Model training", "Data visualization", "Data cleaning", "None"], answer: "Data visualization" },
+    { question: "Which function is used in Python to load a CSV file?", options: ["pd.read_csv()", "load.csv()", "csv.open()", "read.csv()"], answer: "pd.read_csv()" },
+    { question: "Which metric is used to measure regression model performance?", options: ["Accuracy", "Precision", "Mean Squared Error", "F1-score"], answer: "Mean Squared Error" },
+    { question: "Which method helps prevent overfitting in Machine Learning?", options: ["Dropout", "More layers", "More training data", "None"], answer: "Dropout" },
+    { question: "Which type of bias occurs when training data is not diverse?", options: ["Selection bias", "Overfitting", "Underfitting", "Concept drift"], answer: "Selection bias" },
+    { question: "What is an outlier in data analysis?", options: ["A missing value", "A duplicate record", "A data point far from others", "None"], answer: "A data point far from others" },
+];
+
+// Function to shuffle and select 10 random questions
+function getRandomQuestions() {
+    let shuffled = questions.sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, 10);
+}
+
+let selectedQuestions = getRandomQuestions();
+let currentQuestionIndex = 0;
+let score = 0;
+
+function loadQuestion() {
+    if (currentQuestionIndex >= selectedQuestions.length) {
+        document.getElementById("question-text").innerText = `Quiz Completed! Your final score: ${score}`;
+        document.getElementById("options-container").innerHTML = "";
+        document.getElementById("next-btn").style.display = "none";
+        setTimeout(restartQuiz, 3000); // Auto-refresh after 3 seconds
+        return;
+    }
+
+    let currentQuestion = selectedQuestions[currentQuestionIndex];
+    document.getElementById("question-text").innerText = currentQuestion.question;
+
+    let optionsHTML = "";
+    currentQuestion.options.forEach(option => {
+        optionsHTML += `<button class="option" onclick="checkAnswer('${option}')">${option}</button>`;
+    });
+
+    document.getElementById("options-container").innerHTML = optionsHTML;
+}
+
+function checkAnswer(selectedOption) {
+    let correctAnswer = selectedQuestions[currentQuestionIndex].answer;
+    if (selectedOption === correctAnswer) {
+        score++;
+    }
+    document.getElementById("score-text").innerText = `Score: ${score}`;
+    currentQuestionIndex++;
+    loadQuestion();
+}
+
+function restartQuiz() {
+    score = 0;
+    currentQuestionIndex = 0;
+    selectedQuestions = getRandomQuestions(); // Load new random questions
+    document.getElementById("next-btn").style.display = "block";
+    document.getElementById("score-text").innerText = `Score: ${score}`;
+    loadQuestion();
+}
+
+// Load first question
+loadQuestion();<ALOASK-SEPARATE-EDITORS><ALOASK-SEPARATE-EDITORS>
