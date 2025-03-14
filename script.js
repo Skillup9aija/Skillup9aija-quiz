@@ -1,4 +1,11 @@
-const questions = [...]; // Add 100 questions here
+const questions = [
+    { question: "What is the capital of France?", options: ["Paris", "London", "Rome", "Berlin"], answer: "Paris" },
+    { question: "Who developed JavaScript?", options: ["Brendan Eich", "Elon Musk", "Mark Zuckerberg", "Bill Gates"], answer: "Brendan Eich" },
+    { question: "What is the largest planet in our solar system?", options: ["Mars", "Jupiter", "Saturn", "Venus"], answer: "Jupiter" },
+    { question: "How many continents are there on Earth?", options: ["5", "6", "7", "8"], answer: "7" },
+    { question: "What is the chemical symbol for water?", options: ["O2", "H2O", "CO2", "NaCl"], answer: "H2O" },
+    // Add more questions up to 100
+];
 
 let selectedQuestions = [];
 let currentQuestionIndex = 0;
@@ -14,6 +21,14 @@ function startQuiz() {
     selectedQuestions = getRandomQuestions();
     currentQuestionIndex = 0;
     score = 0;
+    document.getElementById("quiz-container").innerHTML = `
+        <h1>SkillUp9aija Quiz</h1>
+        <h2 id="question-text">Loading question...</h2>
+        <div id="options-container"></div>
+        <p id="timer"></p>
+        <p id="feedback"></p>
+        <button onclick="nextQuestion()">Next</button>
+    `;
     loadQuestion();
 }
 
@@ -63,7 +78,7 @@ function checkAnswer(selectedOption) {
 function nextQuestion() {
     currentQuestionIndex++;
     
-    if (currentQuestionIndex % 50 === 0) {
+    if (currentQuestionIndex === 25) { // Show an intermediate score at halfway
         showIntermediateScore();
     } else {
         loadQuestion();
@@ -71,7 +86,7 @@ function nextQuestion() {
 }
 
 function showIntermediateScore() {
-    document.getElementById("quiz-container").innerHTML = `<h2>Your Score so far: ${score}/50</h2>
+    document.getElementById("quiz-container").innerHTML = `<h2>Your Score so far: ${score}/25</h2>
         <button onclick='loadQuestion()'>Continue</button>`;
 }
 
@@ -80,3 +95,6 @@ function showResults() {
     document.getElementById("quiz-container").innerHTML = `<h2>${message} Your Final Score: ${score}/50</h2>
         <button onclick='startQuiz()'>Restart Quiz</button>`;
 }
+
+// Ensure quiz starts on page load
+window.onload = startQuiz;
